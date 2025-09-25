@@ -62,7 +62,7 @@ export default function Home() {
       setLoadingQuestion(true);
       setWelcome(false);
       const response = await fetch(
-        "https://backend-ai-english-grammar-tester.vercel.app/interact",
+        "http://localhost:3000/interact",
         {
           method: "POST",
           credentials: "include",

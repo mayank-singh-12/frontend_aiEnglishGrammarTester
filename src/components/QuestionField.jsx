@@ -35,7 +35,7 @@ export default function QuestionField() {
       setQuestion("");
       setOptions([]);
       setLoadingEval(true);
-      const response = await fetch("https://backend-ai-english-grammar-tester.vercel.app/interact", {
+      const response = await fetch("http://localhost:3000/interact", {
         method: "POST",
         credentials: "include",
         headers: {

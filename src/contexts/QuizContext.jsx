@@ -45,7 +45,7 @@ export function QuizProvider({ children }) {
     async function initialGreet() {
       try {
         setLoadingGreet(true);
-        const response = await fetch("https://backend-ai-english-grammar-tester.vercel.app/", {
+        const response = await fetch("http://localhost:3000", {
           method: "GET",
           credentials: "include",
         });
