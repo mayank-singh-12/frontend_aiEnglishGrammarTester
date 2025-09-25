@@ -35,14 +35,17 @@ export default function QuestionField() {
       setQuestion("");
       setOptions([]);
       setLoadingEval(true);
-      const response = await fetch("http://localhost:3000/interact", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ answer }),
-      });
+      const response = await fetch(
+        "https://backend-ai-english-grammar-tester.vercel.app/interact",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ answer }),
+        }
+      );
 
       if (!response.ok) throw "Unable to get response from ai.";
 

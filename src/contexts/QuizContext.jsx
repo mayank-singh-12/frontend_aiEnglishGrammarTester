@@ -45,10 +45,13 @@ export function QuizProvider({ children }) {
     async function initialGreet() {
       try {
         setLoadingGreet(true);
-        const response = await fetch("http://localhost:3000", {
-          method: "GET",
-          credentials: "include",
-        });
+        const response = await fetch(
+          "https://backend-ai-english-grammar-tester.vercel.app",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
         if (!response.ok) {
           throw "Unable to get greeting from Ai.";
         }
