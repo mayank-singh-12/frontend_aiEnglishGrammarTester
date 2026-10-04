@@ -37,6 +37,9 @@ export default function Home() {
     setFeedback,
     setNextPrompt,
     setFullAnswer,
+
+    chatHistory,
+    addToHistory,
   } = useQuiz();
 
   async function formHandler(e) {
@@ -61,22 +64,28 @@ export default function Home() {
       setAnswer("");
       setLoadingQuestion(true);
       setWelcome(false);
+
+      // Save user request to history
+      addToHistory("user", data);
+
       const response = await fetch(
-        "https://backend-ai-english-grammar-tester.vercel.app/interact",
+        `${import.meta.env.VITE_LOCAL}/interact`,
         {
           method: "POST",
-          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          // Send history + new user message so Gemini has full context
+          body: JSON.stringify({ history: chatHistory, message: data }),
         }
       );
-      console.log(response)
 
       if (!response.ok) throw "Unable to get response from ai.";
 
       const { aiResData } = await response.json();
+
+      // Save AI question response to history
+      addToHistory("assistant", aiResData);
 
       if (aiResData.options) {
         setOptions(aiResData.options);

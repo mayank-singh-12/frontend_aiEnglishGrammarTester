@@ -41,17 +41,23 @@ export function QuizProvider({ children }) {
   const [loadingEval, setLoadingEval] = useState(false);
   const [errorEval, setErrorEval] = useState(null);
 
+  // CHAT HISTORY — resets on every page reload (fresh chat per session)
+  const [chatHistory, setChatHistory] = useState([]);
+
+  console.log(chatHistory)
+
+  // Add a message to chat history: role = "user" | "assistant"
+  function addToHistory(role, content) {
+    setChatHistory((prev) => [...prev, { role, content }]);
+  }
+
   useEffect(() => {
     async function initialGreet() {
       try {
         setLoadingGreet(true);
-        const response = await fetch(
-          "https://backend-ai-english-grammar-tester.vercel.app",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`${import.meta.env.VITE_LOCAL}`, {
+          method: "GET",
+        });
         if (!response.ok) {
           throw "Unable to get greeting from Ai.";
         }
@@ -118,6 +124,10 @@ export function QuizProvider({ children }) {
     setLoadingEval,
     errorEval,
     setErrorEval,
+
+    // CHAT HISTORY
+    chatHistory,
+    addToHistory,
   };
 
   return (

@@ -24,6 +24,9 @@ export default function QuestionField() {
     setOptions,
     setQuestion,
     setQuestionHeading,
+
+    chatHistory,
+    addToHistory,
   } = useQuiz();
 
   async function ansFormHandler(e) {
@@ -35,21 +38,29 @@ export default function QuestionField() {
       setQuestion("");
       setOptions([]);
       setLoadingEval(true);
+
+      // Save user answer to history
+      addToHistory("user", { answer });
+
       const response = await fetch(
-        "https://backend-ai-english-grammar-tester.vercel.app/interact",
+        `${import.meta.env.VITE_LOCAL}/interact`,
         {
           method: "POST",
-          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ answer }),
+          // Send history + new user answer so Gemini can evaluate with context
+          body: JSON.stringify({ history: chatHistory, message: { answer } }),
         }
       );
 
       if (!response.ok) throw "Unable to get response from ai.";
 
       const { aiResData } = await response.json();
+
+      // Save AI evaluation response to history
+      addToHistory("assistant", aiResData);
+
       setIsCorrect(aiResData.isCorrect);
       setFeedback(aiResData.feedback);
       setNextPrompt(aiResData.nextPrompt);
