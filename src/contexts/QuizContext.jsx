@@ -55,7 +55,7 @@ export function QuizProvider({ children }) {
     async function initialGreet() {
       try {
         setLoadingGreet(true);
-        const response = await fetch(`${import.meta.env.VITE_LOCAL}`, {
+        const response = await fetch(`${import.meta.env.VITE_SERVER}`, {
           method: "GET",
         });
         if (!response.ok) {

@@ -69,7 +69,7 @@ export default function Home() {
       addToHistory("user", data);
 
       const response = await fetch(
-        `${import.meta.env.VITE_LOCAL}/interact`,
+        `${import.meta.env.VITE_SERVER}/interact`,
         {
           method: "POST",
           headers: {

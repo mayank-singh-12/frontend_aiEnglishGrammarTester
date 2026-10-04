@@ -43,7 +43,7 @@ export default function QuestionField() {
       addToHistory("user", { answer });
 
       const response = await fetch(
-        `${import.meta.env.VITE_LOCAL}/interact`,
+        `${import.meta.env.VITE_SERVER}/interact`,
         {
           method: "POST",
           headers: {
